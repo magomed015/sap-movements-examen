@@ -1,0 +1,153 @@
+<mvc:View
+    controllerName="movementsapp1.controller.Detail"
+    xmlns="sap.m"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc">
+
+
+    <semantic:SemanticPage
+        id="detailPage"
+        busy="{detailView>/busy}"
+        busyIndicatorDelay="{detailView>/delay}">
+        <semantic:titleHeading>
+            <Title
+                text="Move {MovId}"
+                level="H2"/>
+        </semantic:titleHeading>
+        <!--
+        <semantic:headerContent>
+            <ObjectAttribute title="{i18n>priceTitle}"/>
+            <ObjectNumber />
+        </semantic:headerContent>
+ -->
+        <semantic:content>
+        <VBox>
+        
+
+            <f:SimpleForm>
+    <f:content>
+        <Label text="{i18n>Move ID}" />
+        <Text text="{MovId}" />
+
+         <Label text="{i18n>Type of Move}" />
+        <Text text="{Type}" />
+
+        <Label text="{i18n>Move Date}" />
+        <Text text="{path: 'MovDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}" />
+
+        <Label text="{i18n>Change Date}" />
+        <Text text="{path: 'ChgDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}" />
+
+        <Label text="{i18n>User Name}" /> 
+        <Text text="{ChgUser}" />
+
+        <Label text="{i18n>Business Partner}" />
+        <Text text="{Partner}" />
+
+        <Label text="{i18n>Location}" />
+        <Text text="{Location}" />
+
+        <Label text="{i18n>Finished}" />
+        <Text text="{Finished}" />
+     </f:content>
+</f:SimpleForm>
+
+
+ <Table
+                id="lineItemsList"
+                width="auto"
+                items="{ToMoveItem}"
+                updateFinished=".onListUpdateFinished"
+                noDataText="{i18n>detailLineItemTableNoDataText}"
+                busyIndicatorDelay="{detailView>/lineItemTableDelay}">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title
+                            id="lineItemsTitle"
+                            text="all moves"
+                            titleStyle="H3"
+                            level="H3"/>
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                
+                
+                    <!--properties van entity type moveItem in gateway-->
+                    
+                    <Column> 
+                        <Text text="MoveId"/>
+                    </Column>
+                     <Column>
+                        <Text text="ItemId"/>
+                    </Column>
+                    <Column>
+                        <Text text="Matnr"/>
+                    </Column>
+                    <Column>
+                        <Text text="Umziz"/>
+                    </Column> 
+                    <Column>
+                        <Text text="Meins"/>
+                    </Column>
+                    <!---->
+
+                    
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="End">
+                        <Text text="{i18n>detailLineItemTableUnitNumberColumn}"/>
+                    </Column>
+                    
+                    
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier
+                            
+                            title="{MovId}"/>
+                            <Text text="{ItemId}" />
+                            <Text text="{Matnr}" />
+                            <Text text="{Umziz}" />
+                            <Text text="{Meins}" />    
+
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        
+         </VBox>
+            
+        </semantic:content>
+        <!--Semantic ShareMenu Buttons-->
+        <semantic:sendEmailAction>
+            <semantic:SendEmailAction
+                id="shareEmail"
+                press=".onSendEmailPress"/>
+        </semantic:sendEmailAction>
+
+        <semantic:closeAction>
+            <semantic:CloseAction
+                    id="closeColumn"
+                    press=".onCloseDetailPress"/>
+        </semantic:closeAction>
+
+        <semantic:fullScreenAction>
+            <semantic:FullScreenAction
+                    id="enterFullScreen"
+                    visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/midColumn/fullScreen}}"
+                    press=".toggleFullScreen"/>
+        </semantic:fullScreenAction>
+        <semantic:exitFullScreenAction>
+            <semantic:ExitFullScreenAction
+                    id="exitFullScreen"
+                    visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}"
+                    press=".toggleFullScreen"/>
+        </semantic:exitFullScreenAction>
+
+    </semantic:SemanticPage>
+
+</mvc:View>
